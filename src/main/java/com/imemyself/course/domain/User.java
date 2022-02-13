@@ -1,26 +1,30 @@
 package com.imemyself.course.domain;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String email;
 	private String phone;
 	private String password;
-	
+
 	public User() {
-		
+
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
