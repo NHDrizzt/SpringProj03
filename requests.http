@@ -9,4 +9,8 @@ get http://localhost:8080/users/1
 get http://localhost:8080/Orders/1
 
 ###
-get http://localhost:8080/Categories/1
+get http://localhost:8080/Categories/
+
+###
+get http://localhost:8080/Products/
+ 
