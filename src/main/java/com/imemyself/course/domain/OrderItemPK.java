@@ -8,19 +8,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class OrdemItemPK implements Serializable {
-
-    @ManyToOne
-    private Order order;
+public class OrderItemPK implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    public OrdemItemPK() {
+    public OrderItemPK() {
     }
 
-    public OrdemItemPK(Order order, Product product) {
+    public OrderItemPK(Order order, Product product) {
         this.order = order;
         this.product = product;
     }
@@ -41,12 +43,12 @@ public class OrdemItemPK implements Serializable {
         this.product = product;
     }
 
-    public OrdemItemPK order(Order order) {
+    public OrderItemPK order(Order order) {
         setOrder(order);
         return this;
     }
 
-    public OrdemItemPK product(Product product) {
+    public OrderItemPK product(Product product) {
         setProduct(product);
         return this;
     }
@@ -55,11 +57,11 @@ public class OrdemItemPK implements Serializable {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof OrdemItemPK)) {
+        if (!(o instanceof OrderItemPK)) {
             return false;
         }
-        OrdemItemPK ordemItemPK = (OrdemItemPK) o;
-        return Objects.equals(order, ordemItemPK.order) && Objects.equals(product, ordemItemPK.product);
+        OrderItemPK OrderItemPK = (OrderItemPK) o;
+        return Objects.equals(order, OrderItemPK.order) && Objects.equals(product, OrderItemPK.product);
     }
 
     @Override

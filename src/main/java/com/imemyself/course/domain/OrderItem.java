@@ -7,26 +7,30 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_order_item")
-public class OrdemItem implements Serializable {
+public class OrderItem implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private OrdemItemPK id;
+    private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
 
-    public OrdemItem() {
+    public OrderItem() {
     }
 
-    public OrdemItem(Order order, Product product, Integer quantity, Double price) {
+    public OrderItem(Order order, Product product, Integer quantity, Double price) {
         id.setOrder(order);
         id.setProduct(product);
         this.quantity = quantity;
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
@@ -43,11 +47,11 @@ public class OrdemItem implements Serializable {
         id.setProduct(product);
     }
 
-    public OrdemItemPK getId() {
+    public OrderItemPK getId() {
         return this.id;
     }
 
-    public void setId(OrdemItemPK id) {
+    public void setId(OrderItemPK id) {
         this.id = id;
     }
 
@@ -67,17 +71,17 @@ public class OrdemItem implements Serializable {
         this.price = price;
     }
 
-    public OrdemItem id(OrdemItemPK id) {
+    public OrderItem id(OrderItemPK id) {
         setId(id);
         return this;
     }
 
-    public OrdemItem quantity(Integer quantity) {
+    public OrderItem quantity(Integer quantity) {
         setQuantity(quantity);
         return this;
     }
 
-    public OrdemItem price(Double price) {
+    public OrderItem price(Double price) {
         setPrice(price);
         return this;
     }
@@ -86,12 +90,12 @@ public class OrdemItem implements Serializable {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof OrdemItem)) {
+        if (!(o instanceof OrderItem)) {
             return false;
         }
-        OrdemItem ordemItem = (OrdemItem) o;
-        return Objects.equals(id, ordemItem.id) && Objects.equals(quantity, ordemItem.quantity)
-                && Objects.equals(price, ordemItem.price);
+        OrderItem OrderItem = (OrderItem) o;
+        return Objects.equals(id, OrderItem.id) && Objects.equals(quantity, OrderItem.quantity)
+                && Objects.equals(price, OrderItem.price);
     }
 
     @Override
