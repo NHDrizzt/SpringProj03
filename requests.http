@@ -27,4 +27,7 @@ Content-Type: application/json
 "phone": "977557755",
 "password": "123456"
 }
+
+###
+delete http://localhost:8080/users/3
  
