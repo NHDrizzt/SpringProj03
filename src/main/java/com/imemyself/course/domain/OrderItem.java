@@ -1,7 +1,6 @@
 package com.imemyself.course.domain;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -24,6 +23,7 @@ public class OrderItem implements Serializable {
     }
 
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
+        super();
         id.setOrder(order);
         id.setProduct(product);
         this.quantity = quantity;
@@ -47,16 +47,8 @@ public class OrderItem implements Serializable {
         id.setProduct(product);
     }
 
-    public OrderItemPK getId() {
-        return this.id;
-    }
-
-    public void setId(OrderItemPK id) {
-        this.id = id;
-    }
-
     public Integer getQuantity() {
-        return this.quantity;
+        return quantity;
     }
 
     public void setQuantity(Integer quantity) {
@@ -64,52 +56,40 @@ public class OrderItem implements Serializable {
     }
 
     public Double getPrice() {
-        return this.price;
+        return price;
     }
 
     public void setPrice(Double price) {
         this.price = price;
     }
 
-    public OrderItem id(OrderItemPK id) {
-        setId(id);
-        return this;
-    }
-
-    public OrderItem quantity(Integer quantity) {
-        setQuantity(quantity);
-        return this;
-    }
-
-    public OrderItem price(Double price) {
-        setPrice(price);
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof OrderItem)) {
-            return false;
-        }
-        OrderItem OrderItem = (OrderItem) o;
-        return Objects.equals(id, OrderItem.id) && Objects.equals(quantity, OrderItem.quantity)
-                && Objects.equals(price, OrderItem.price);
+    public Double getSubTotal() {
+        return price * quantity;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, quantity, price);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
     }
 
     @Override
-    public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", quantity='" + getQuantity() + "'" +
-                ", price='" + getPrice() + "'" +
-                "}";
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        OrderItem other = (OrderItem) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
     }
 
 }
