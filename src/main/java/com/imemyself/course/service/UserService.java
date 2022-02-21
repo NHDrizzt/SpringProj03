@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.imemyself.course.domain.User;
+import com.imemyself.course.exception.ResourceNotFoundException;
 import com.imemyself.course.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> obj = serviceRepository.findById(id);
-        return obj.get();
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User obj) {
@@ -29,6 +30,18 @@ public class UserService {
 
     public void delete(Long id) {
         serviceRepository.deleteById(id);
+    }
+
+    public User update(Long id, User obj) {
+        User entity = serviceRepository.getOne(id);
+        updateData(entity, obj);
+        return serviceRepository.save(entity);
+    }
+
+    private void updateData(User entity, User obj) {
+        entity.setName(obj.getName());
+        entity.setEmail(obj.getEmail());
+        entity.setPhone(obj.getPhone());
     }
 
 }
