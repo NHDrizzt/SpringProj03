@@ -3,6 +3,8 @@ package com.imemyself.course.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.imemyself.course.domain.User;
 import com.imemyself.course.exception.DatabaseException;
 import com.imemyself.course.exception.ResourceNotFoundException;
@@ -42,9 +44,13 @@ public class UserService {
     }
 
     public User update(Long id, User obj) {
-        User entity = serviceRepository.getOne(id);
-        updateData(entity, obj);
-        return serviceRepository.save(entity);
+        try {
+            User entity = serviceRepository.getOne(id);
+            updateData(entity, obj);
+            return serviceRepository.save(entity);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateData(User entity, User obj) {
